@@ -6,21 +6,22 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
 
 URL = "https://act.ucsd.edu/scheduleOfClasses/scheduleOfClassesStudentResult.htm"
 # URL = "https://act.ucsd.edu/scheduleOfClasses/scheduleOfClassesStudentResult.htm?selectedTerm=WI23&xsoc_term=&loggedIn=false&tabNum=&selectedSubjects=AIP+&selectedSubjects=AAS+&selectedSubjects=AWP+&selectedSubjects=ANES&selectedSubjects=ANBI&selectedSubjects=ANAR&selectedSubjects=ANTH&selectedSubjects=ANSC&selectedSubjects=AESE&selectedSubjects=AAPI&selectedSubjects=AUD+&selectedSubjects=BENG&selectedSubjects=BNFO&selectedSubjects=BIEB&selectedSubjects=BICD&selectedSubjects=BIPN&selectedSubjects=BIBC&selectedSubjects=BGGN&selectedSubjects=BGJC&selectedSubjects=BGRD&selectedSubjects=BGSE&selectedSubjects=BILD&selectedSubjects=BIMM&selectedSubjects=BISP&selectedSubjects=BIOM&selectedSubjects=CMM+&selectedSubjects=CENG&selectedSubjects=CHEM&selectedSubjects=CHIN&selectedSubjects=CLAS&selectedSubjects=CCS+&selectedSubjects=CLIN&selectedSubjects=CLRE&selectedSubjects=COGS&selectedSubjects=COMM&selectedSubjects=COGR&selectedSubjects=CSS+&selectedSubjects=CSE+&selectedSubjects=CGS+&selectedSubjects=CAT+&selectedSubjects=TDDM&selectedSubjects=TDHD&selectedSubjects=TDMV&selectedSubjects=TDPF&selectedSubjects=TDTR&selectedSubjects=DSC+&selectedSubjects=DSE+&selectedSubjects=DERM&selectedSubjects=DSGN&selectedSubjects=DOC+&selectedSubjects=DDPM&selectedSubjects=ECON&selectedSubjects=EDS+&selectedSubjects=ERC+&selectedSubjects=ECE+&selectedSubjects=EMED&selectedSubjects=ENG+&selectedSubjects=ENVR&selectedSubjects=ESYS&selectedSubjects=ETIM&selectedSubjects=ETHN&selectedSubjects=EXPR&selectedSubjects=FMPH&selectedSubjects=FPM+&selectedSubjects=FILM&selectedSubjects=GPCO&selectedSubjects=GPEC&selectedSubjects=GPGN&selectedSubjects=GPIM&selectedSubjects=GPLA&selectedSubjects=GPPA&selectedSubjects=GPPS&selectedSubjects=GLBH&selectedSubjects=GSS+&selectedSubjects=HITO&selectedSubjects=HIAF&selectedSubjects=HIEA&selectedSubjects=HIEU&selectedSubjects=HILA&selectedSubjects=HISC&selectedSubjects=HINE&selectedSubjects=HIUS&selectedSubjects=HIGR&selectedSubjects=HILD&selectedSubjects=HDS+&selectedSubjects=HMNR&selectedSubjects=HUM+&selectedSubjects=INTL&selectedSubjects=JAPN&selectedSubjects=JWSP&selectedSubjects=LATI&selectedSubjects=LHCO&selectedSubjects=LISL&selectedSubjects=LIAB&selectedSubjects=LIDS&selectedSubjects=LIFR&selectedSubjects=LIGN&selectedSubjects=LIGM&selectedSubjects=LIHL&selectedSubjects=LIIT&selectedSubjects=LIPO&selectedSubjects=LISP&selectedSubjects=LTAF&selectedSubjects=LTCH&selectedSubjects=LTCO&selectedSubjects=LTCS&selectedSubjects=LTEU&selectedSubjects=LTFR&selectedSubjects=LTGM&selectedSubjects=LTGK&selectedSubjects=LTIT&selectedSubjects=LTKO&selectedSubjects=LTLA&selectedSubjects=LTRU&selectedSubjects=LTSP&selectedSubjects=LTTH&selectedSubjects=LTWR&selectedSubjects=LTEN&selectedSubjects=LTWL&selectedSubjects=LTEA&selectedSubjects=MMW+&selectedSubjects=MBC+&selectedSubjects=MATS&selectedSubjects=MATH&selectedSubjects=MSED&selectedSubjects=MAE+&selectedSubjects=MED+&selectedSubjects=MCWP&selectedSubjects=MUS+&selectedSubjects=NANO&selectedSubjects=NEU+&selectedSubjects=NEUG&selectedSubjects=OBG+&selectedSubjects=OPTH&selectedSubjects=ORTH&selectedSubjects=PATH&selectedSubjects=PEDS&selectedSubjects=PHAR&selectedSubjects=SPPS&selectedSubjects=PHIL&selectedSubjects=PHYS&selectedSubjects=PHYA&selectedSubjects=POLI&selectedSubjects=PSY+&selectedSubjects=PSYC&selectedSubjects=RMAS&selectedSubjects=RAD+&selectedSubjects=MGTF&selectedSubjects=MGT+&selectedSubjects=MGTA&selectedSubjects=MGTP&selectedSubjects=RELI&selectedSubjects=RMED&selectedSubjects=REV+&selectedSubjects=SPPH&selectedSubjects=SOMI&selectedSubjects=SOMC&selectedSubjects=SIOC&selectedSubjects=SIOG&selectedSubjects=SIOB&selectedSubjects=SIO+&selectedSubjects=SEV+&selectedSubjects=SOCG&selectedSubjects=SOCE&selectedSubjects=SOCI&selectedSubjects=SE++&selectedSubjects=SURG&selectedSubjects=SYN+&selectedSubjects=TDAC&selectedSubjects=TDDE&selectedSubjects=TDDR&selectedSubjects=TDGE&selectedSubjects=TDGR&selectedSubjects=TDHT&selectedSubjects=TDPW&selectedSubjects=TDPR&selectedSubjects=TMC+&selectedSubjects=USP+&selectedSubjects=UROL&selectedSubjects=VIS+&selectedSubjects=WARR&selectedSubjects=WCWP&selectedSubjects=WES+&_selectedSubjects=1&schedOption1=true&_schedOption1=on&_schedOption11=on&_schedOption12=on&schedOption2=true&_schedOption2=on&_schedOption4=on&_schedOption5=on&_schedOption3=on&_schedOption7=on&_schedOption8=on&_schedOption13=on&_schedOption10=on&_schedOption9=on&schDay=M&_schDay=on&schDay=T&_schDay=on&schDay=W&_schDay=on&schDay=R&_schDay=on&schDay=F&_schDay=on&schDay=S&_schDay=on&schStartTime=12%3A00&schStartAmPm=0&schEndTime=12%3A00&schEndAmPm=0&_selectedDepartments=1&schedOption1Dept=true&_schedOption1Dept=on&_schedOption11Dept=on&_schedOption12Dept=on&schedOption2Dept=true&_schedOption2Dept=on&_schedOption4Dept=on&_schedOption5Dept=on&_schedOption3Dept=on&_schedOption7Dept=on&_schedOption8Dept=on&_schedOption13Dept=on&_schedOption10Dept=on&_schedOption9Dept=on&schDayDept=M&_schDayDept=on&schDayDept=T&_schDayDept=on&schDayDept=W&_schDayDept=on&schDayDept=R&_schDayDept=on&schDayDept=F&_schDayDept=on&schDayDept=S&_schDayDept=on&schStartTimeDept=12%3A00&schStartAmPmDept=0&schEndTimeDept=12%3A00&schEndAmPmDept=0&courses=&sections=&instructorType=begin&instructor=&titleType=contain&title=&_hideFullSec=on&_showPopup=on"
 # URL = "https://act.ucsd.edu/scheduleOfClasses/scheduleOfClassesStudentResult.htm?selectedTerm=SP23&xsoc_term=&loggedIn=false&tabNum=&selectedSubjects=CSE&schedOption1=true&_schedOption1=on&_schedOption11=on&_schedOption12=on&schedOption2=true&_schedOption2=on&_schedOption4=on&_schedOption5=on&_schedOption3=on&_schedOption7=on&_schedOption8=on&_schedOption13=on&_schedOption10=on&_schedOption9=on&schDay=M&_schDay=on&schDay=T&_schDay=on&schDay=W&_schDay=on&schDay=R&_schDay=on&schDay=F&_schDay=on&schDay=S&_schDay=on&schStartTime=12%3A00&schStartAmPm=0&schEndTime=12%3A00&schEndAmPm=0&_selectedDepartments=1&schedOption1Dept=true&_schedOption1Dept=on&_schedOption11Dept=on&_schedOption12Dept=on&schedOption2Dept=true&_schedOption2Dept=on&_schedOption4Dept=on&_schedOption5Dept=on&_schedOption3Dept=on&_schedOption7Dept=on&_schedOption8Dept=on&_schedOption13Dept=on&_schedOption10Dept=on&_schedOption9Dept=on&schDayDept=M&_schDayDept=on&schDayDept=T&_schDayDept=on&schDayDept=W&_schDayDept=on&schDayDept=R&_schDayDept=on&schDayDept=F&_schDayDept=on&schDayDept=S&_schDayDept=on&schStartTimeDept=12%3A00&schStartAmPmDept=0&schEndTimeDept=12%3A00&schEndAmPmDept=0&courses=&sections=&instructorType=begin&instructor=&titleType=contain&title=&_hideFullSec=on&_showPopup=on"
+FILE = "sp23.json"
 options = Options()
-# options.headless = True
-# options.add_argument('--window-size=1920,1200')
+options.add_argument("--headless")
 options.add_experimental_option("detach", True)
 
 
 def open_browser():
+    # Open URL
     driver = webdriver.Chrome(
         options=options, service=Service(ChromeDriverManager().install())
     )
@@ -45,6 +46,7 @@ def open_browser():
     [currentPage, totalPages] = \
         re.findall(r"Page \((\d+) of (\d+)\)", pagesText)[0]
 
+    # Goes through all rows in the table
     data = Data()
     department = ""
     courseName = ""
@@ -117,7 +119,7 @@ def open_browser():
             lastRow = row
 
         # print(data.getData())
-        uploadData(data)
+        uploadData(data, FILE)
 
         # Gets next page
         # Change to ?page= for general URL, &page= for specific URL
@@ -129,15 +131,7 @@ def open_browser():
 
         pagesText = tdElements[0].text
         [currentPage, totalPages] = \
-            re.findall("Page \((\d+) of (\d+)\)", pagesText)[0]
-
-    # pageNumberElements = tdElements[0].find_elements(By.TAG_NAME, "a")
-    # for pageNumberElement in pageNumberElements:
-    #     link = pageNumberElement.get_attribute("href")
-    #     if link is not None and link.endswith("page=" + str(int(currentPage) + 1)):
-    #         # pageNumberElement.click()
-    #         driver.get(link)
-    #         break
+            re.findall(r"Page \((\d+) of (\d+)\)", pagesText)[0]
 
     wait = WebDriverWait(driver, 600)
     element = wait.until(
@@ -146,10 +140,10 @@ def open_browser():
     print("Done")
 
 
-def uploadData(data):
+def uploadData(data, file):
     dataJSON = data.getData()
 
-    with open("sp23.json", "w") as outfile:
+    with open(file, "w") as outfile:
         json.dump(dataJSON, outfile)
 
 
